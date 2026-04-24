@@ -27,7 +27,8 @@ O script:
 ├── zipador.py
 ├── .env
 ├── .env.exemplo
-└── .gitignore
+├── .gitignore
+└── LICENSE
 ```
 
 ## Requisitos
@@ -82,4 +83,6 @@ O script informa mensagens claras para cenários como:
 
 ## Licença
 
-Uso interno / privado.
+Este projeto esta licenciado sob a Licenca MIT.
+
+Para mais detalhes, consulte o arquivo `LICENSE`.
