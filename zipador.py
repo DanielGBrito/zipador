@@ -41,12 +41,21 @@ def get_configured_dirs() -> tuple[Path | None, Path | None]:
 def zip_folder(folder_path: Path, destination_dir: Path) -> Path:
 	"""Create a zip file for a folder, preserving internal structure."""
 	zip_path = destination_dir / f"{folder_path.name}.zip"
+	zip_root = Path(folder_path.name)
 
 	with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+		# Garante a pasta raiz dentro do zip: NomeDaPasta/
+		zf.writestr(f"{folder_path.name}/", "")
+
 		for item in folder_path.rglob("*"):
-			if item.is_file():
-				arcname = item.relative_to(folder_path)
-				zf.write(item, arcname)
+			relative_path = item.relative_to(folder_path)
+			arcname = zip_root / relative_path
+
+			if item.is_dir():
+				dir_arcname = f"{arcname.as_posix().rstrip('/')}/"
+				zf.writestr(dir_arcname, "")
+			elif item.is_file():
+				zf.write(item, arcname.as_posix())
 
 	return zip_path
 
